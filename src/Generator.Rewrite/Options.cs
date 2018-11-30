@@ -33,7 +33,7 @@ namespace osuTK.Rewrite
         /// <summary>
         /// Gets or sets a value indicating whether native calls are forced to use DllImport instead of GetProcAddress.
         /// </summary>
-        [Option("dllimport", Default = false,
+        [Option("dllimport", Default = true,
             HelpText = "Force native calls to use DllImport instead of GetProcAddress.")]
         public bool UseDLLImport { get; set; }
         

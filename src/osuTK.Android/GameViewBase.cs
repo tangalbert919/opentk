@@ -27,7 +27,7 @@ using Size = System.Drawing.Size;
 
 namespace osuTK
 {
-    [Register ("opentk_1_1/GameViewBase")]
+    [Register ("osutk/GameViewBase")]
     public abstract class GameViewBase : SurfaceView, IGameWindow
     {
         private IGraphicsContext graphicsContext;
