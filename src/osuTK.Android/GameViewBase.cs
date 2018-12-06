@@ -890,10 +890,10 @@ namespace osuTK
 
         public string Title {
             get {
-                throw new NotImplementedException ();
+                return "0";
             }
             set {
-                throw new NotImplementedException ();
+                Title = value;
             }
         }
 
