@@ -26,13 +26,14 @@
 //
 
 using System;
+using System.Collections.Generic;
 
 namespace osuTK.Input
 {
     public interface IJoystickDriver2
     {
         JoystickState GetState(int index);
-        JoystickState[] GetStates();
+        void GetStates(List<JoystickState> result);
         JoystickCapabilities GetCapabilities(int index);
         Guid GetGuid(int index);
     }

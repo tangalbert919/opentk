@@ -24,6 +24,7 @@
  //
 
 using System;
+using System.Collections.Generic;
 
 namespace osuTK.Input
 {
@@ -82,12 +83,12 @@ namespace osuTK.Input
         /// <summary>
         /// Retrives <see cref="osuTK.Input.MouseState"/> for all mouse device.
         /// </summary>
-        /// <returns>An array of <see cref="osuTK.Input.MouseState"/> representing the state for the mouse devices.</returns>
-        public static MouseState[] GetStates()
+        /// <param name="result">All states of the keyboard devices are populated into this list.</param>
+        public static void GetStates(List<MouseState> result)
         {
             lock (SyncRoot)
             {
-                return driver.GetStates();
+                driver.GetStates(result);
             }
         }
 

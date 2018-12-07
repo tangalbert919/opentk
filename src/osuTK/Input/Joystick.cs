@@ -26,6 +26,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 
 namespace osuTK.Input
 {
@@ -78,10 +79,10 @@ namespace osuTK.Input
         /// <summary>
         /// Retrives <see cref="osuTK.Input.JoystickState"/> for all joystick devices.
         /// </summary>
-        /// <returns>An array of <see cref="osuTK.Input.JoystickState"/> representing the state for the joystick devices.</returns>
-        public static JoystickState[] GetStates()
+        /// <param name="result">All states of the joystick devices are populated into this list.</param>
+        public static void GetStates(List<JoystickState> result)
         {
-            return implementation.GetStates();
+            implementation.GetStates(result);
         }
 
         /// <summary>

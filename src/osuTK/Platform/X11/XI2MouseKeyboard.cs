@@ -26,7 +26,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using osuTK.Input;
@@ -193,11 +192,15 @@ namespace osuTK.Platform.X11
             }
         }
 
-        public KeyboardState[] GetStates()
+        public void GetStates(List<KeyboardState> result)
         {
             lock (Sync)
             {
-                return keyboards.Select(device => device.State).ToArray();
+                result.Clear();
+                for (int i = 0; i < keyboards.Count; i++)
+                {
+                    result.Add(((IKeyboardDriver2)this).GetState(i));
+                }
             }
         }
 
@@ -238,11 +241,15 @@ namespace osuTK.Platform.X11
             }
         }
 
-        MouseState[] IMouseDriver2.GetStates()
+        void IMouseDriver2.GetStates(List<MouseState> result)
         {
             lock (Sync)
             {
-                return devices.Select(d => d.State).ToArray();
+                result.Clear();
+                for (int i = 0; i < devices.Count; i++)
+                {
+                    result.Add(((IMouseDriver2)this).GetState(i));
+                }
             }
         }
 

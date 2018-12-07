@@ -24,6 +24,7 @@
  //
 
 using System;
+using System.Collections.Generic;
 
 namespace osuTK.Input
 {
@@ -70,12 +71,12 @@ namespace osuTK.Input
         /// <summary>
         /// Retrives <see cref="osuTK.Input.KeyboardState"/> for all keyboard devices.
         /// </summary>
-        /// <returns>An array of <see cref="osuTK.Input.KeyboardState"/> representing the state for the keyboard devices.</returns>
-        public static KeyboardState[] GetStates()
+        /// <param name="result">All states of the keyboard devices are populated into this list.</param>
+        public static void GetStates(List<KeyboardState> result)
         {
             lock (SyncRoot)
             {
-                return driver.GetStates();
+                driver.GetStates(result);
             }
         }
 

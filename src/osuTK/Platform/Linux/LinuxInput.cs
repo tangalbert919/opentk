@@ -26,9 +26,9 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using osuTK.Input;
@@ -600,11 +600,15 @@ namespace osuTK.Platform.Linux
             }
         }
 
-        KeyboardState[] IKeyboardDriver2.GetStates()
+        void IKeyboardDriver2.GetStates(List<KeyboardState> result)
         {
             lock (Sync)
             {
-                return Keyboards.Select(device => device.State).ToArray();
+                result.Clear();
+                foreach (var device in Keyboards)
+                {
+                    result.Add(device.State);
+                }
             }
         }
 
@@ -653,11 +657,15 @@ namespace osuTK.Platform.Linux
             }
         }
 
-        MouseState[] IMouseDriver2.GetStates()
+        void IMouseDriver2.GetStates(List<MouseState> result)
         {
             lock (Sync)
             {
-                return Mice.Select(m => m.State).ToArray();
+                result.Clear();
+                for (int i = 0; i < Mice.Count; i++)
+                {
+                    result.Add(((IMouseDriver2)this).GetState(i));
+                }
             }
         }
 

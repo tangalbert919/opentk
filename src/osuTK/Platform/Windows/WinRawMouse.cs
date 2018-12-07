@@ -352,11 +352,15 @@ namespace osuTK.Platform.Windows
             }
         }
 
-        public MouseState[] GetStates()
+        public void GetStates(List<MouseState> result)
         {
             lock (UpdateLock)
             {
-                return mice.ToArray();
+                result.Clear();
+                for (int i = 0; i < mice.Count; i++)
+                {
+                    result.Add(GetState(i));
+                }
             }
         }
 

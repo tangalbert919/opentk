@@ -24,6 +24,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using osuTK.Input;
 
@@ -90,9 +91,13 @@ namespace osuTK.Platform.X11
             }
         }
 
-        public KeyboardState[] GetStates()
+        public void GetStates(List<KeyboardState> result)
         {
-            return new[] {GetState(0)};
+            result.Clear();
+            for (int i = 0; i < 1; i++)
+            {
+                result.Add(GetState(i));
+            }
         }
 
         public string GetDeviceName(int index)

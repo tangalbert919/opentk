@@ -26,7 +26,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.InteropServices;
 using osuTK.Input;
 using osuTK.Platform.Common;
@@ -1004,9 +1003,13 @@ namespace osuTK.Platform.MacOS
             return new MouseState();
         }
 
-        MouseState[] IMouseDriver2.GetStates()
+        void IMouseDriver2.GetStates(List<MouseState> result)
         {
-            return MouseDevices.Select(d => d.State).ToArray();
+            result.Clear();
+            for (int i = 0; i < MouseDevices.Count; i++)
+            {
+                result.Add(((IMouseDriver2)this).GetState(i));
+            }
         }
 
         MouseState IMouseDriver2.GetCursorState()
@@ -1042,9 +1045,13 @@ namespace osuTK.Platform.MacOS
             return new KeyboardState();
         }
 
-        public KeyboardState[] GetStates()
+        public void GetStates(List<KeyboardState> result)
         {
-            return KeyboardDevices.Select(device => device.State).ToArray();
+            result.Clear();
+            foreach (var device in KeyboardDevices)
+            {
+                result.Add(device.State);
+            }
         }
 
         string IKeyboardDriver2.GetDeviceName(int index)
@@ -1070,9 +1077,13 @@ namespace osuTK.Platform.MacOS
             return new JoystickState();
         }
 
-        JoystickState[] IJoystickDriver2.GetStates()
+        void IJoystickDriver2.GetStates(List<JoystickState> result)
         {
-            return JoystickDevices.Select(device => device.State).ToArray();
+            result.Clear();
+            foreach (var device in JoystickDevices)
+            {
+                result.Add(device.State);
+            }
         }
 
         JoystickCapabilities IJoystickDriver2.GetCapabilities(int index)

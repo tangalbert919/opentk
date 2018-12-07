@@ -26,6 +26,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using osuTK.Input;
 using System.Runtime.InteropServices;
 using System.Security;
@@ -476,7 +477,7 @@ namespace osuTK.Platform.Windows
             }
         }
 
-        public JoystickState[] GetStates()
+        public void GetStates(List<JoystickState> result)
         {
             throw new NotImplementedException($"Use {nameof(WinRawJoystick)}'s {nameof(GetStates)} instead");
         }

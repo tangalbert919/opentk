@@ -23,13 +23,15 @@
  // OTHER DEALINGS IN THE SOFTWARE.
  //
 
-namespace osuTK.Input
+ using System.Collections.Generic;
+
+ namespace osuTK.Input
 {
     public interface IMouseDriver2
     {
         MouseState GetState();
         MouseState GetState(int index);
-        MouseState[] GetStates();
+        void GetStates(List<MouseState> result);
         void SetPosition(double x, double y);
         MouseState GetCursorState();
     }

@@ -28,7 +28,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.InteropServices;
 using osuTK.Input;
 using osuTK.Platform.Common;
@@ -821,11 +820,15 @@ namespace osuTK.Platform.Windows
             }
         }
 
-        public JoystickState[] GetStates()
+        public void GetStates(List<JoystickState> result)
         {
             lock (UpdateLock)
             {
-                return Enumerable.Range(0, Devices.Count()).Select(GetState).ToArray();
+                result.Clear();
+                for (int i = 0; i < Devices.Count; i++)
+                {
+                    result.Add(GetState(i));
+                }
             }
         }
 

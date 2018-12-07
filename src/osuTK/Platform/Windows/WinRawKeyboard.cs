@@ -290,11 +290,15 @@ namespace osuTK.Platform.Windows
             }
         }
 
-        public KeyboardState[] GetStates()
+        public void GetStates(List<KeyboardState> result)
         {
             lock (UpdateLock)
             {
-                return keyboards.ToArray();
+                result.Clear();
+                for (int i = 0; i < keyboards.Count; i++)
+                {
+                    result.Add(GetState(i));
+                }
             }
         }
 

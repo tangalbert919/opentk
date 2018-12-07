@@ -24,6 +24,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using osuTK.Input;
 
@@ -117,9 +118,13 @@ namespace osuTK.Platform.SDL2
             }
         }
 
-        public MouseState[] GetStates()
+        public void GetStates(List<MouseState> result)
         {
-            return new[] { GetState(0) };
+            result.Clear();
+            for (int i = 0; i < 1; i++)
+            {
+                result.Add(((IMouseDriver2)this).GetState(i));
+            }
         }
 
         public MouseState GetCursorState()

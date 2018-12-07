@@ -26,7 +26,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using osuTK.Input;
 
 namespace osuTK.Platform.SDL2
@@ -629,9 +628,13 @@ namespace osuTK.Platform.SDL2
             return state;
         }
 
-        JoystickState[] IJoystickDriver2.GetStates()
+        void IJoystickDriver2.GetStates(List<JoystickState> result)
         {
-            return Enumerable.Range(0, joysticks.Count).Select(index => ((IJoystickDriver2)this).GetState(index)).ToArray();
+            result.Clear();
+            for (int i = 0; i < joysticks.Count; i++)
+            {
+                result.Add(((IJoystickDriver2)this).GetState(i));
+            }
         }
 
         JoystickCapabilities IJoystickDriver2.GetCapabilities(int index)

@@ -23,6 +23,7 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using System.Collections.Generic;
 using osuTK.Input;
 
 namespace osuTK.Platform.SDL2
@@ -93,9 +94,13 @@ namespace osuTK.Platform.SDL2
             }
         }
 
-        public KeyboardState[] GetStates()
+        public void GetStates(List<KeyboardState> result)
         {
-            return new[] {GetState(0)};
+            result.Clear();
+            for (int i = 0; i < 1; i++)
+            {
+                result.Add(((IKeyboardDriver2)this).GetState(i));
+            }
         }
 
         public string GetDeviceName(int index)

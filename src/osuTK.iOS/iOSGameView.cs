@@ -473,26 +473,27 @@ namespace osuTK.iOS
 
         Rectangle INativeWindow.Bounds
         {
-            get => new Rectangle((int)Layer.Frame.X, (int)Layer.Frame.Y, (int)Layer.Frame.Width, (int)Layer.Frame.Height);
+            get => new Rectangle(X, Y, Width, Height);
             set { }
         }
 
 
         public Point Location
         {
-            get => new Point((int)Layer.Frame.X, (int)Layer.Frame.Y);
+            get => new Point();
             set { }
         }
 
 
+        private Size size;
         public Size Size
         {
-            get => new Size((int)Layer.Frame.Width, (int)Layer.Frame.Height);
+            get => size;
             set
             {
-                if (value.Width == Layer.Frame.Width && value.Height == Layer.Frame.Height)
+                if (value.Width == size.Width && value.Height == size.Height)
                     return;
-                // TODO: resize layer
+                size = value;
                 OnResize(EventArgs.Empty);
             }
         }
@@ -502,38 +503,38 @@ namespace osuTK.iOS
 
         public int X
         {
-            get => (int)Layer.Frame.X;
+            get => 0;
             set { }
         }
 
         public int Y
         {
-            get => (int)Layer.Frame.Y;
+            get => 0;
             set { }
         }
 
         public int Width
         {
-            get => (int)Layer.Frame.Width;
+            get => size.Width;
             set { }
         }
 
         public int Height
         {
-            get => (int)Layer.Frame.Height;
+            get => size.Height;
             set { }
         }
 
 
         public Rectangle ClientRectangle
         {
-            get => new Rectangle(0, 0, (int)Layer.Bounds.Size.Width, (int)Layer.Bounds.Size.Height);
+            get => new Rectangle(0, 0, Width, Height);
             set { }
         }
 
         public Size ClientSize
         {
-            get => new Size((int)Layer.Frame.Width, (int)Layer.Frame.Height);
+            get => new Size(Width, Height);
             set { }
         }
 
@@ -648,8 +649,8 @@ namespace osuTK.iOS
             gl.FramebufferRenderbuffer(All.FramebufferOes, All.ColorAttachment0Oes, All.RenderbufferOes, renderbuffer);
 
             Size newSize = new Size(
-                    (int)Math.Round(eaglLayer.Bounds.Size.Width),
-                    (int)Math.Round(eaglLayer.Bounds.Size.Height));
+                    (int)Math.Round(eaglLayer.Bounds.Size.Width * ContentScaleFactor),
+                    (int)Math.Round(eaglLayer.Bounds.Size.Height * ContentScaleFactor));
             Size = newSize;
 
             gl.Viewport(0, 0, newSize.Width, newSize.Height);
