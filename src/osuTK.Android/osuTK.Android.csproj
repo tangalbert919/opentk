@@ -6,7 +6,7 @@
     <Title>ppy.osuTK.Android</Title>
     <RootNamespace>osuTK.Android</RootNamespace>
     <AssemblyName>osuTK.Android</AssemblyName>
-    <TargetFramework>monoandroid50</TargetFramework>
+    <TargetFramework>monoandroid80</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

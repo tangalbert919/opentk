@@ -30,7 +30,7 @@ using Size = System.Drawing.Size;
 
 namespace osuTK.Android
 {
-    [Register ("osutk/android/AndroidGameView")]
+    //[Register ("osutk/android/AndroidGameView")]
     public partial class AndroidGameView : GameViewBase, ISurfaceHolderCallback
     {
         private bool disposed;

@@ -27,7 +27,7 @@ using Size = System.Drawing.Size;
 
 namespace osuTK
 {
-    [Register ("osutk/GameViewBase")]
+    //[Register ("osutk/GameViewBase")]
     public abstract class GameViewBase : SurfaceView, IGameWindow
     {
         private IGraphicsContext graphicsContext;
@@ -1150,17 +1150,19 @@ namespace osuTK
             remove { throw new NotSupportedException(); }
         }
 
-        event EventHandler<KeyboardKeyEventArgs> INativeWindow.KeyDown
+        protected virtual void OnKeyDown(KeyboardKeyEventArgs e)
         {
-            add { throw null; }
-            remove { throw null; }
+            KeyDown?.Invoke(this, e);
         }
 
-        event EventHandler<KeyboardKeyEventArgs> INativeWindow.KeyUp
+        public event EventHandler<KeyboardKeyEventArgs> KeyDown;
+
+        protected virtual void OnKeyUp(KeyboardKeyEventArgs e)
         {
-            add { throw new NotSupportedException(); }
-            remove { throw new NotSupportedException(); }
+            KeyUp?.Invoke(this, e);
         }
+
+        public event EventHandler<KeyboardKeyEventArgs> KeyUp;
 
         event EventHandler<MouseButtonEventArgs> INativeWindow.MouseDown
         {
