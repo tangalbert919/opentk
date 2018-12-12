@@ -27,6 +27,7 @@ using Android.Graphics;
 using osuTK.Platform.Egl;
 using SurfaceType = Android.Views.SurfaceType;
 using Size = System.Drawing.Size;
+using Android.App;
 
 namespace osuTK.Android
 {
@@ -689,6 +690,47 @@ namespace osuTK.Android
                     OnResize (EventArgs.Empty);
                 }
             }
+        }
+        public override string Title {
+            get {
+                EnsureUndisposed();
+                var c = GetActivity();
+                if (c != null)
+                {
+                    return c.Title;
+                }
+                throw new NotSupportedException();
+            }
+            set {
+                EnsureUndisposed();
+                var c = GetActivity();
+                if (c != null)
+                {
+                    if (c.Title != value)
+                    {
+                        c.Title = value;
+                        OnTitleChanged(EventArgs.Empty);
+                    }
+                }
+                else
+                {
+                    throw new NotSupportedException();
+                }
+            }
+        }
+        private Activity GetActivity()
+        {
+            Context context = Application.Context;
+            while (context != null)
+            {
+                var c = context as Activity;
+                if (c != null)
+                {
+                    return c;
+                }
+                context = context.ApplicationContext;
+            }
+            return null;
         }
     }
 }
