@@ -693,16 +693,16 @@ namespace osuTK.Android
         }
         public override string Title {
             get {
-                EnsureUndisposed();
+                /*EnsureUndisposed();
                 var c = GetActivity();
                 if (c != null)
                 {
                     return c.Title;
-                }
+                }*/
                 throw new NotSupportedException();
             }
             set {
-                EnsureUndisposed();
+                /*EnsureUndisposed();
                 var c = GetActivity();
                 if (c != null)
                 {
@@ -713,9 +713,9 @@ namespace osuTK.Android
                     }
                 }
                 else
-                {
+                {*/
                     throw new NotSupportedException();
-                }
+                //}
             }
         }
         private Activity GetActivity()
