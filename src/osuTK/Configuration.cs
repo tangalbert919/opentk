@@ -27,6 +27,7 @@ using System;
 using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Linq;
 
 namespace osuTK
 {
@@ -37,7 +38,7 @@ namespace osuTK
     /// </summary>
     public sealed class Configuration
     {
-        private static bool runningOnUnix, runningOnMacOS, runningOnLinux, runningOnIOS;
+        private static bool runningOnUnix, runningOnMacOS, runningOnLinux;
         private volatile static bool initialized;
         private readonly static object InitLock = new object();
 
@@ -69,7 +70,7 @@ namespace osuTK
         /// <summary>Gets a System.Boolean indicating whether osuTK is running on the Linux kernel.</summary>
         public static bool RunningOnLinux { get { return runningOnLinux; } }
 
-        /// <summary>Gets a System.Boolean indicating whether osuTK is running on a MacOS platform.</summary>
+        /// <summary>Gets a System.Boolean indicating whether osuTK is running on a macOS platform.</summary>
         public static bool RunningOnMacOS { get { return runningOnMacOS; } }
 
         /// <summary>
@@ -79,18 +80,15 @@ namespace osuTK
 
         /// <summary>
         /// Gets a <c>System.Boolean</c> indicating whether
-        /// osuTK is running on an Android device.
+        /// osuTK is running on an Android device (or emulator).
         /// </summary>
-        public static bool RunningOnAndroid
-        {
-            get; private set;
-        }
+        public static bool RunningOnAndroid { get; private set; }
 
         /// <summary>
         /// Gets a <c>System.Boolean</c> indicating whether
-        /// osuTK is running on an Android device.
+        /// osuTK is running on an iOS device (or simulator).
         /// </summary>
-        public static bool RunningOnIOS { get { return runningOnIOS; } }
+        public static bool RunningOnIOS { get; private set; }
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
         private struct utsname
@@ -207,9 +205,9 @@ namespace osuTK
         }
         #endif
 
-        private static void DetectUnix(out bool unix, out bool linux, out bool macos, out bool ios)
+        private static void DetectUnix(out bool unix, out bool linux, out bool macos)
         {
-            unix = linux = macos = ios = false;
+            unix = linux = macos = false;
 
             var uts = DetectUnixKernel();
             switch (uts.sysname)
@@ -224,12 +222,7 @@ namespace osuTK
                     break;
 
                 case "Darwin":
-                    // for now we'll just check the machine name
-                    if (uts.machine.StartsWith("iPhone") || uts.machine.StartsWith("iPad") || uts.machine.StartsWith("iPod"))
-                        ios = true;
-                    else
-                        macos = true;
-                    unix = true;
+                    macos = unix = true;
                     break;
 
                 default:
@@ -258,18 +251,9 @@ namespace osuTK
             #endif
         }
 
-        private static bool DetectAndroid()
-        {
-            //List the assemblies in the current application domain.
-            foreach (Assembly assem in AppDomain.CurrentDomain.GetAssemblies())
-            {
-                if (assem.ToString().Contains("Mono.Android"))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+        private static bool DetectAndroid() => AppDomain.CurrentDomain.GetAssemblies().Any(x => x.ToString().Contains("Mono.Android"));
+
+        private static bool DetectIOS() => AppDomain.CurrentDomain.GetAssemblies().Any(x => x.ToString().Contains("Xamarin.iOS"));
 
         // Detects the underlying OS and runtime.
         internal static void Init(ToolkitOptions options)
@@ -281,16 +265,22 @@ namespace osuTK
                     RunningOnMono = DetectMono();
                     RunningOnWindows = DetectWindows();
                     RunningOnAndroid = DetectAndroid();
+                    RunningOnIOS = DetectIOS();
 
                     if (!RunningOnWindows)
                     {
-                        DetectUnix(out runningOnUnix, out runningOnLinux, out runningOnMacOS, out runningOnIOS);
+                        DetectUnix(out runningOnUnix, out runningOnLinux, out runningOnMacOS);
                     }
 
                     // This will stop the LinuxFactory from loading on Android.
                     if (RunningOnAndroid)
                     {
                         runningOnLinux = false;
+                    }
+
+                    if (RunningOnIOS)
+                    {
+                        runningOnMacOS = false;
                     }
 
                     if (!RunningOnAndroid && (options.Backend == PlatformBackend.Default))
