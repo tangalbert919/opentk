@@ -1121,14 +1121,14 @@ namespace osuTK
 
         MouseCursor INativeWindow.Cursor
         {
-            get { throw new NotSupportedException(); }
-            set { throw new NotSupportedException(); }
+            get;
+            set;
         }
 
         bool INativeWindow.CursorVisible
         {
-            get { throw new NotSupportedException(); }
-            set { throw new NotSupportedException(); }
+            get;
+            set;
         }
 
         Icon INativeWindow.Icon
