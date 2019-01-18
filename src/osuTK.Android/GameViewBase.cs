@@ -1145,16 +1145,18 @@ namespace osuTK
             remove { throw new NotSupportedException(); }
         }
 
-        event EventHandler<KeyboardKeyEventArgs> INativeWindow.KeyDown
+        public event EventHandler<KeyboardKeyEventArgs> KeyDown;
+
+        public virtual void OnKeyDown(KeyboardKeyEventArgs args)
         {
-            add { throw new NotSupportedException(); }
-            remove { throw new NotSupportedException(); }
+            KeyDown?.Invoke(this, args);
         }
 
-        event EventHandler<KeyboardKeyEventArgs> INativeWindow.KeyUp
+        public event EventHandler<KeyboardKeyEventArgs> KeyUp;
+
+        public virtual void OnKeyUp(KeyboardKeyEventArgs args)
         {
-            add { throw new NotSupportedException(); }
-            remove { throw new NotSupportedException(); }
+            KeyUp?.Invoke(this, args);
         }
 
         event EventHandler<MouseButtonEventArgs> INativeWindow.MouseDown
