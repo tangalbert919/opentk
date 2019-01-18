@@ -850,10 +850,7 @@ namespace osuTK
         ///     Throws a <see cref="T:System.NotSupportedException" />.
         ///   </para>
         /// </remarks>
-        public event EventHandler<EventArgs> MouseEnter {
-            add { throw new NotSupportedException (); }
-            remove { throw new NotSupportedException (); }
-        }
+        public event EventHandler<EventArgs> MouseEnter;
 
         /// <summary>This member is not supported.</summary>
         /// <remarks>
@@ -861,10 +858,7 @@ namespace osuTK
         ///     Throws a <see cref="T:System.NotSupportedException" />.
         ///   </para>
         /// </remarks>
-        public event EventHandler<EventArgs> MouseLeave {
-            add { throw new NotSupportedException (); }
-            remove { throw new NotSupportedException (); }
-        }
+        public event EventHandler<EventArgs> MouseLeave;
 
         /// <summary>This member is not supported.</summary>
         /// <remarks>
@@ -1147,17 +1141,7 @@ namespace osuTK
 
         public event EventHandler<KeyboardKeyEventArgs> KeyDown;
 
-        public virtual void OnKeyDown(KeyboardKeyEventArgs args)
-        {
-            KeyDown?.Invoke(this, args);
-        }
-
         public event EventHandler<KeyboardKeyEventArgs> KeyUp;
-
-        public virtual void OnKeyUp(KeyboardKeyEventArgs args)
-        {
-            KeyUp?.Invoke(this, args);
-        }
 
         event EventHandler<MouseButtonEventArgs> INativeWindow.MouseDown
         {
