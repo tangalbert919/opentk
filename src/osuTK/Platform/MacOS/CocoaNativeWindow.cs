@@ -350,14 +350,18 @@ namespace osuTK.Platform.MacOS
         {
             IntPtr pboard = Cocoa.SendIntPtr(sender, Selector.Get("draggingPasteboard"));
             
-            IntPtr files = Cocoa.SendIntPtr(pboard, Selector.Get("propertyListForType:"), NSFilenamesPboardType);
+            IntPtr filePointers = Cocoa.SendIntPtr(pboard, Selector.Get("propertyListForType:"), NSFilenamesPboardType);
 
-            int count = Cocoa.SendInt(files, Selector.Get("count"));
+            int count = Cocoa.SendInt(filePointers, Selector.Get("count"));
+            string[] files = new string[count];
+
             for (int i = 0; i < count; ++i)
             {
-                IntPtr obj = Cocoa.SendIntPtr(files, Selector.Get("objectAtIndex:"), new IntPtr(i));
-                OnFileDrop(Cocoa.FromNSString(obj));
+                IntPtr obj = Cocoa.SendIntPtr(filePointers, Selector.Get("objectAtIndex:"), new IntPtr(i));
+                files[i] = Cocoa.FromNSString(obj);
             }
+            
+            OnFileDrop(files);
             
             return true;
         }

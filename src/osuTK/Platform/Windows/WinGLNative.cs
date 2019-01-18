@@ -687,6 +687,9 @@ namespace osuTK.Platform.Windows
         {
             IntPtr hDrop = wParam;
             uint filesCounter = Functions.DragQueryFile(hDrop, 0xFFFFFFFF, IntPtr.Zero, 0);
+            
+            string[] files = new string[filesCounter];
+
             for (uint i = 0; i < filesCounter; ++i)
             {
                 // Don't forget about \0 at the end
@@ -696,10 +699,11 @@ namespace osuTK.Platform.Windows
 
                 Functions.DragQueryFile(hDrop, i, str, filenameChars);
 
-                string dropString = Marshal.PtrToStringAuto(str);
+                files[i] = Marshal.PtrToStringAuto(str);
                 Marshal.FreeHGlobal(str);
-                OnFileDrop(dropString);
             }
+
+            OnFileDrop(files);
 
             Functions.DragFinish(hDrop);
         }

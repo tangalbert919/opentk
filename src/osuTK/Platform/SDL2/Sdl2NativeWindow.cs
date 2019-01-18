@@ -309,7 +309,7 @@ namespace osuTK.Platform.SDL2
         private static unsafe void ProcessDropEvent(Sdl2NativeWindow window, DropEvent ev)
         {
             string dropString = PtrToStringAuto(ev.File);
-            window.OnFileDrop(dropString);
+            window.OnFileDrop(new[] { dropString });
         }
 
         private static void ProcessWindowEvent(Sdl2NativeWindow window, WindowEvent e)

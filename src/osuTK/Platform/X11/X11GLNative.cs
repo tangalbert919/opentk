@@ -1184,12 +1184,8 @@ namespace osuTK.Platform.X11
 
                             string rawString = Marshal.PtrToStringAnsi(data);
                             Functions.XFree(data);
-                            string[] fileNames = parseUriList(rawString);
 
-                            for (int i = 0; i < fileNames.Length; i++)
-                            {
-                                OnFileDrop(fileNames[i]);
-                            }
+                            OnFileDrop(parseUriList(rawString));
 
                             XEvent reply = new XEvent ();
 

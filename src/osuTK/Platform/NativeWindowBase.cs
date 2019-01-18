@@ -145,10 +145,10 @@ namespace osuTK.Platform
             KeyUp(this, e);
         }
 
-        protected void OnFileDrop(string s)
+        protected void OnFileDrop(string[] s)
         {
             var e = FileDropArgs;
-            FileDropArgs.FileName = s;
+            FileDropArgs.FileNames = s;
             FileDrop(this, e);
         }
 

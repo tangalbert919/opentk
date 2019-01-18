@@ -8,10 +8,10 @@ namespace osuTK.Input
     public class FileDropEventArgs : EventArgs
     {
         /// <summary>
-        /// Gets the name of the file.
+        /// Gets the names of the files dropped.
         /// </summary>
-        /// <value>The name of the file.</value>
-        public string FileName
+        /// <value>The names of the files.</value>
+        public string[] FileNames
         {
             get;
             internal set;
