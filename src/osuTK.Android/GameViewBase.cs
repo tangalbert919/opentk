@@ -885,7 +885,7 @@ namespace osuTK
             }
             set {
                 Activity activity = (Activity)Context.ApplicationContext;
-                activity.Title = value;
+                activity.Window.SetTitle(value);
             }
         }
 
