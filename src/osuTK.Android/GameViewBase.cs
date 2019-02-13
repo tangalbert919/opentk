@@ -8,22 +8,19 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.Timers;
 
-using osuTK;
 using osuTK.Graphics;
 using osuTK.Platform;
-using osuTK.Platform.Android;
 
 using Android.Content;
 using Android.Util;
 using Android.Views;
 using Android.Runtime;
 
-using Java.Util;
 using osuTK.Input;
 
 using Size = System.Drawing.Size;
+using Android.App;
 
 namespace osuTK
 {
@@ -883,10 +880,12 @@ namespace osuTK
 
         public string Title {
             get {
-                throw new NotImplementedException ();
+                Activity activity = (Activity)Context.ApplicationContext;
+                return activity.Title;
             }
             set {
-                throw new NotImplementedException ();
+                Activity activity = (Activity)Context.ApplicationContext;
+                activity.Title = value;
             }
         }
 
