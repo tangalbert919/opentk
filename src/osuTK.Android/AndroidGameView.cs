@@ -545,15 +545,6 @@ namespace osuTK.Android
 
             UpdateFrameInternal (updateEventArgs);
             prevUpdateTime = curUpdateTime;
-
-            curRenderTime = DateTime.Now;
-            if (prevRenderTime.Ticks == 0) {
-                var t = (curRenderTime - prevRenderTime).TotalSeconds;
-                renderEventArgs.Time = t;
-            }
-
-            RenderFrameInternal (renderEventArgs);
-            prevRenderTime = curRenderTime;
         }
 
         partial void log (string msg);
